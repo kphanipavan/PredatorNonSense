@@ -608,6 +608,19 @@
       </item>
      </layout>
     </widget>
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>370</y>
+       <width>241</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>30 Seconds Backlight Auto OFF</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">

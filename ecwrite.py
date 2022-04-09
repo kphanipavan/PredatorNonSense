@@ -37,6 +37,6 @@ if __name__ == '__main__':
     value = int('0x60', 0)
     ec_write(addr, value)
 
-    time.sleep(1)
+    time.sleep(0.25)
     value = int('0x50', 0)
     ec_write(addr, value)

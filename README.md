@@ -1,11 +1,11 @@
 # PredatorNonSense
-Clone of Acer's Predator Sense™ application for fan control on Linux
+Replacement of Acer's Predator Sense™ application for fan control on Linux
 
 # * Important *
-- Only the fan controls work.
+- Only the fan controls works properly.
 - Other tabs are buggy and may crash the system.
 - Fan control works fine on my 2021 Predator Helios 300, PH315-53-72W3.
-- This code is tested on Kubuntu 20.04 LTS, you might encounter some issues used on others, if so consult StackOverflow.
+- This code is tested on Kubuntu 20.04 LTS, you might encounter some if issues used on other models, if so consult StackOverflow.
 - It is not garunteed to work on your model.
 - DO NOT RUN THIS ON A DEVICE OTHER THAN A HELIOS 300. USE AT YOUR OWN RISK.
 - YOU ARE WARNED NOT TO USE THIS IF YOU DON'T KNOW WHAT YOU ARE DOING.
@@ -20,6 +20,7 @@ Clone of Acer's Predator Sense™ application for fan control on Linux
 - Make sure ModProbe is available. `which modprobe`
 - Verify that your model number matched "PH315-53-72W3" or serial mathces "NH-QCYSI-008"
 - If not, use an EC reader program like [RW Everything](http://rweverything.com/) and verify that your readings are identical to mine, provided in [This Document](https://docs.google.com/document/d/1t4qgRKOp1AOsxOUDFZo9hASgen8Ea04nu9-PCp-KhYQ/edit)
+- [Evtest](https://command-not-found.com/evtest) has to be installed on the system, if not install it accordingly.
 - Sudo Permissions, required for making EC writable using modprobe.
 
 # Usage
@@ -29,7 +30,8 @@ Clone of Acer's Predator Sense™ application for fan control on Linux
 - Open the cloned repository `cd PredatorNonSense`
 - Run the following: `sudo chmod +x PNS.sh && sudo bash ./PNS.sh`
 - Provide your account password and wait till the window opens.
-- Dont use the "Keyboard RGB" tab, it is a work in progress, may crash.
+- Dont use the "Keyboard RGB" tab, it is a work in progress, may crash but partially works.
+- Launching the app with PredatorSense key works once the program is already opened and closed.
 
 # Features
 
@@ -38,12 +40,16 @@ Clone of Acer's Predator Sense™ application for fan control on Linux
 - One click switch between Auto mode and Max speed mode.
 - Manual mode available with individual sliders.
 - The turbo light turns on if any one of the fans are set to turbo.
-- Sinple Design.
+- Fan profile control.
+- New switch for toggling *30 seconds auto keyboard backlight off* available under the Keyboard RGB tab.
+- Simple/basic Design.
 
-## Note
-- Sliders lag when used, change it one step at a time using arrow keys.
+# Note
+- Sliders lag when used, change it one step at a time using arrow keys on the keyboard.
 - Thanks to [MSI Fan Control by Artharvalele](https://github.com/atharvalele/MSI_Fan_Control) for providing some part of the code.
 - Thanks to [Acer](www.acer.com) for [this](https://www.acer.com/ac/en/IN/content/predator-model/NH.QCYSI.008) marvalous laptop.
 - Fan curve cannot be changed.
-- Turbo Button and the Predator Sense Key doesn't work.
+- ~~Turbo Button and the Predator Sense Key doesn't work.~~
+- Predator Sense key works but the feature is in beta.
+- Turbo button works as intended starting from Linux Kernel 5.15 thanks to [this amazing repo](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module) for pushing the fix to Linux Kernel.
 - Open an issue if you encounter one.

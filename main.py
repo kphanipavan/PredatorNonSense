@@ -39,6 +39,13 @@ KB_RS = ['0x3C', '0x3F', '0x42', '0x45']
 KB_GS = ['0x3D', '0x40', '0x43', '0x46']
 KB_BS = ['0x3E', '0x41', '0x44', '0x47']
 ZONES_ON = [1, 1, 1, 1]
+KB_30_SEC_AUTO = '0x06'
+KB_30_AUTO_OFF = '0x00'
+KB_30_AUTO_ON = '0x1E'
+FAN_PROFILE_CONTROL = '0x29'
+FAN_PROFILE_NORMAL = '0x00'
+FAN_PROFILE_PERF = '0x01'
+FAN_PROFILE_AGGR = '0x02'
 
 
 class PFS(enum.Enum):  # ProcessorFanState
@@ -59,22 +66,23 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
         self.cb = True if ec_read(int(COOL_BOOST_CONTROL, 0)) == 1 else False
         if self.cb:
             self.checkBox.setChecked(True)
-        tempvar = ec_read(int(CPU_FAN_MODE_CONTROL, 0))
+        tempvar = int(ec_read(int(CPU_FAN_MODE_CONTROL, 0)))
+#        print(tempvar)
         if tempvar == 84 or tempvar == 00:
             self.cpuFanMode = PFS.Auto
             self.radioButton.setChecked(True)
         elif tempvar == 88:
             self.cpuFanMode = PFS.Turbo
             self.radioButton_3.setChecked(True)
-        elif tempvar == 92 or tempvar==93:
+        elif tempvar == 92 or tempvar == 93:
             self.cpuFanMode = PFS.Manual
             self.radioButton_2.setChecked(True)
         else:
             print('FOUND', tempvar)
             print('UNKNOWN VALUE FOUND EXITT at cpu box')
             self.cpuauto()
-            exit(1)
-        tempvar = ec_read(int(GPU_FAN_MODE_CONTROL, 0))
+#           exit(1)
+        tempvar = int(ec_read(int(GPU_FAN_MODE_CONTROL, 0)))
         if tempvar == 80 or tempvar == 00:
             self.gpuFanMode = PFS.Auto
             self.radioButton_4.setChecked(True)
@@ -88,7 +96,20 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
             print('FOUND', tempvar)
             print('UNKNOWN VALUE FOUND EXITT at gpu box')
             self.gpuauto()
-            exit(1)
+#            exit(1)
+        tempvar = ec_read(int(KB_30_SEC_AUTO, 0))
+        # print('kb30',tempvar)
+        if tempvar == int(KB_30_AUTO_OFF, 0):
+            self.checkBox_2.setChecked(False)
+        else:
+            self.checkBox_2.setChecked(True)
+        tempvar = ec_read(int(FAN_PROFILE_CONTROL, 0))
+        if tempvar == int(FAN_PROFILE_NORMAL, 0):
+            self.radioButton_14.setChecked(True)
+        elif tempvar == int(FAN_PROFILE_PERF, 0):
+            self.radioButton_15.setChecked(True)
+        elif tempvar == int(FAN_PROFILE_AGGR, 0):
+            self.radioButton_16.setChecked(True)
         self.radioButton.toggled['bool'].connect(self.cpuauto)
         self.radioButton_3.toggled.connect(self.cpureeeer)
         self.radioButton_4.toggled.connect(self.gpuauto)
@@ -112,6 +133,10 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
         self.pushButton_6.clicked.connect(self.z1)
         self.pushButton_7.clicked.connect(self.z2)
         self.pushButton_8.clicked.connect(self.z3)
+        self.checkBox_2.clicked['bool'].connect(self.togglekbauto)
+        self.radioButton_14.toggled.connect(self.fanprofnormal)
+        self.radioButton_15.toggled.connect(self.fanprofperf)
+        self.radioButton_16.toggled.connect(self.fanprofaggr)
 
     def cpureeeer(self):
         ec_write(int(CPU_FAN_MODE_CONTROL, 0), int(CPU_TURBO_MODE, 0))
@@ -242,11 +267,29 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
         for i in KB_BS:
             ec_write(int(i, 0), colors[2])
 
+    def togglekbauto(self, tog):
+        # print('received', tog)
+        if not tog:
+            # self.checkBox_2.setChecked(False)
+            ec_write(int(KB_30_SEC_AUTO, 0), int(KB_30_AUTO_OFF, 0))
+        else:
+            # self.checkBox_2.setChecked(True)
+            ec_write(int(KB_30_SEC_AUTO, 0), int(KB_30_AUTO_ON, 0))
+
+    def fanprofnormal(self):
+        ec_write(int(FAN_PROFILE_CONTROL, 0), int(FAN_PROFILE_NORMAL, 0))
+
+    def fanprofperf(self):
+        ec_write(int(FAN_PROFILE_CONTROL, 0), int(FAN_PROFILE_PERF, 0))
+
+    def fanprofaggr(self):
+        ec_write(int(FAN_PROFILE_CONTROL, 0), int(FAN_PROFILE_AGGR, 0))
+
 
 app = QtWidgets.QApplication([])
 application = MainWindow()
-application.cpuauto()
-application.gpuauto()
+# application.cpuauto()
+# application.gpuauto()
 app.setStyle('Breeze')
 # application.radioButton.toggled.
 application.setWindowIcon(QtGui.QIcon('acer.png'))
