@@ -47,9 +47,10 @@ Replacement of Acer's Predator Sense™ application for fan control on Linux
 # Note
 - Sliders lag when used, change it one step at a time using arrow keys on the keyboard.
 - Thanks to [MSI Fan Control by Artharvalele](https://github.com/atharvalele/MSI_Fan_Control) for providing some part of the code.
-- Thanks to [Acer](www.acer.com) for [this](https://www.acer.com/ac/en/IN/content/predator-model/NH.QCYSI.008) marvalous laptop.
+- Thanks to [Acer](www.acer.com) for this:\[[old link](https://www.acer.com/ac/en/IN/content/predator-model/NH.QCYSI.008), [web archive](https://web.archive.org/web/20210226020248/https://www.acer.com/ac/en/IN/content/predator-series/predatorhelios300)] marvalous laptop.
+- My laptop is now a history :\[
 - Fan curve cannot be changed.
 - ~~Turbo Button and the Predator Sense Key doesn't work.~~
 - Predator Sense key works but the feature is in beta.
-- Turbo button works as intended starting from Linux Kernel 5.15 thanks to [this amazing repo](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module) for pushing the fix to Linux Kernel.
+- Turbo button works as intended, tested on Arch 5.15 and Fedora 5.16, starting from Linux Kernel 5.15 thanks to [this amazing repo](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module) for pushing the fix to Linux Kernel.
 - Open an issue if you encounter one.
