@@ -46,6 +46,9 @@ FAN_PROFILE_CONTROL = '0x29'
 FAN_PROFILE_NORMAL = '0x00'
 FAN_PROFILE_PERF = '0x01'
 FAN_PROFILE_AGGR = '0x02'
+BAT_LIMIT_CONTROL = "0x03"
+BAT_LIMIT_100 = "0x31"
+BAT_LIMIT_80 = "0x71"
 
 
 class PFS(enum.Enum):  # ProcessorFanState
@@ -110,6 +113,11 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
             self.radioButton_15.setChecked(True)
         elif tempvar == int(FAN_PROFILE_AGGR, 0):
             self.radioButton_16.setChecked(True)
+        tempvar = ec_read(int(BAT_LIMIT_CONTROL, 0))
+        if tempvar == int(BAT_LIMIT_100, 0):
+            self.radioButton_17.setChecked(True)
+        elif tempvar == int(BAT_LIMIT_80, 0):
+            self.radioButton_18.setChecked(True)
         self.radioButton.toggled['bool'].connect(self.cpuauto)
         self.radioButton_3.toggled.connect(self.cpureeeer)
         self.radioButton_4.toggled.connect(self.gpuauto)
@@ -119,7 +127,7 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
         self.verticalSlider_2.valueChanged.connect(self.gpumanual)
         self.radioButton_2.toggled.connect(self.cpusetmanual)
         self.radioButton_6.toggled.connect(self.gpusetmanual)
-        self.pushButton.clicked.connect(lambda: exit())
+        self.pushButton.clicked.connect(exit)
         self.radioButton_8.clicked.connect(self.setstatic)
         self.pushButton_4.clicked.connect(self.setcolor)
         self.radioButton_10.clicked.connect(self.setbreathing)
@@ -137,6 +145,8 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
         self.radioButton_14.toggled.connect(self.fanprofnormal)
         self.radioButton_15.toggled.connect(self.fanprofperf)
         self.radioButton_16.toggled.connect(self.fanprofaggr)
+        self.radioButton_17.toggled.connect(self.batLimitOff)
+        self.radioButton_18.toggled.connect(self.batLimitOn)
 
     def cpureeeer(self):
         ec_write(int(CPU_FAN_MODE_CONTROL, 0), int(CPU_TURBO_MODE, 0))
@@ -284,6 +294,12 @@ class MainWindow(QtWidgets.QDialog, Ui_PredatorNonSense):
 
     def fanprofaggr(self):
         ec_write(int(FAN_PROFILE_CONTROL, 0), int(FAN_PROFILE_AGGR, 0))
+
+    def batLimitOff(self):
+        ec_write(int(BAT_LIMIT_CONTROL, 0), int(BAT_LIMIT_100, 0))
+
+    def batLimitOn(self):
+        ec_write(int(BAT_LIMIT_CONTROL, 0), int(BAT_LIMIT_80, 0))
 
 
 app = QtWidgets.QApplication([])

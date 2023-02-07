@@ -303,7 +303,6 @@
      <property name="font">
       <font>
        <pointsize>16</pointsize>
-       <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
@@ -693,8 +692,47 @@
    </widget>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
-     <string>CPU Undervolt</string>
+     <string>System Settings</string>
     </attribute>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>571</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Battery Charge Limiter</string>
+     </property>
+     <widget class="QRadioButton" name="radioButton_17">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>40</y>
+        <width>121</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>No Charge Limit</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_18">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>40</y>
+        <width>92</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Limit to 80%</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

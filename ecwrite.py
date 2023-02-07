@@ -1,5 +1,8 @@
 import time
-EC_IO_FILE = '/sys/kernel/debug/ec/ec0/io'
+import os
+
+EC_IO_FILE = '/dev/ec' if os.system(
+    'ls /sys/kernel/debug/ec/ec0/io 2> /dev/null > /dev/null') else '/sys/kernel/debug/ec/ec0/io'
 
 try:
     open(EC_IO_FILE, 'rb')
@@ -13,12 +16,11 @@ except FileNotFoundError:
     print('Try restarting the application, Changes made to EC...')
 
 
-
 def ec_write(addr, value):
     with open(EC_IO_FILE, "rb+") as f:
         f.seek(addr)
         old_value = ord(f.read(1))
-        if(value != old_value):
+        if (value != old_value):
             print("                %3d => %3d" % (old_value, value))
             f.seek(addr)
             f.write(bytearray([value]))
